@@ -1,0 +1,21 @@
+# 3.8 т.к. для версии docekr 19.03.0+ версия compose file format 3.8, а версия docker docker --version Docker version 27.2.0
+# version: "3.8" написал мне ошибку WARN[0000] /home/valerasomov/part 6/docker-compose.yml: the attribute `version` is obsolete, 
+#it will be ignored, please remove it to avoid potential confusion 
+# Следует учитывать, что docker-composes работает с сервисами. 1 сервис = 1 контейнер.
+# Сервисом может быть клиент, сервер, сервер баз данных...
+# Раздел, в котором будут описаны сервисы, начинается с 'services'.
+services:
+  nginx_frostdra: 
+    image: nginx_frostdra:1.1 #первый контейнер из образа раздела 5
+    container_name: nginx_frostdra
+
+  nginx:
+    image: nginx:latest #второй контейнер из образа nginx
+    ports:
+      - "80:8080" # пробрасывает порт 80 локальной машины на порт 8080 контейнера
+    depends_on:
+      - nginx_frostdra
+    volumes:
+      - /home/valerasomov/part 6/nginx.conf:/etc/nginx/nginx.conf
+# копирование файла тут прочитал https://stackoverflow.com/questions/39176561/copying-files-to-a-container-with-docker-compose
+
